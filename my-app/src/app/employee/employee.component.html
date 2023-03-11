@@ -1,0 +1,105 @@
+<div class="container">
+    <h1>Employees</h1>
+  
+    <div class="row">
+      <div class="col-md-4">
+        <h3>Add New Employee</h3>
+        <form (submit)="addEmployee()">
+          <div class="form-group">
+            <label for="employee-firstname">First Name</label>
+            <input type="text" class="form-control" id="employee-firstname" [(ngModel)]="newEmployee.firstName" name="firstName" required>
+          </div>
+          <div class="form-group">
+            <label for="employee-lastname">Last Name</label>
+            <input type="text" class="form-control" id="employee-lastname" [(ngModel)]="newEmployee.lastName" name="lastName" required>
+          </div>
+          <div class="form-group">
+            <label for="employee-email">Email</label>
+            <input type="email" class="form-control" id="employee-email" [(ngModel)]="newEmployee.email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="employee-department">Department</label>
+            <select class="form-control" id="employee-department" [(ngModel)]="newEmployee.departmentId" name="departmentId" required>
+              <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="employee-dateofbirth">Date of Birth</label>
+            <input type="date" class="form-control" id="employee-dateofbirth" [(ngModel)]="newEmployee.dateOfBirth" name="dateOfBirth">
+          </div>
+          <div class="form-group">
+            <label for="employee-salary">Salary</label>
+            <input type="number" class="form-control" id="employee-salary" [(ngModel)]="newEmployee.salary" name="salary" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Employee</button>
+        </form>
+      </div>
+  
+      <div class="col-md-8">
+        <h3>List of Employees</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Date of Birth</th>
+              <th>Salary</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees">
+              <td>{{ employee.id }}</td>
+              <td>{{ employee.firstName }}</td>
+              <td>{{ employee.lastName }}</td>
+              <td>{{ employee.email }}</td>
+              <td>{{ employee.department.name }}</td>
+              <td>{{ employee.dateOfBirth | date:'mediumDate' }}</td>
+              <td>{{ employee.salary | currency }}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-primary" (click)="editEmployee(employee)">Edit</button>
+                <button type="button" class="btn btn-sm btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>      
+    </div>
+    
+    <div *ngIf="editingEmployee">
+      <h3>Edit Employee</h3>
+      <form (submit)="updateEmployee()">
+        <div class="form-group">
+          <label for="employee-firstname">First Name</label>
+          <input type="text" class="form-control" id="employee-firstname" [(ngModel)]="editingEmployee.firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="employee-lastname">Last Name</label>
+          <input type="text" class="form-control" id="employee-lastname" [(ngModel)]="editingEmployee.lastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="employee-email">Email</label>
+          <input type="email" class="form-control" id="employee-email" [(ngModel)]="editingEmployee.email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="employee-department">Department</label>
+          <select class="form-control" id="employee-department" [(ngModel)]="editingEmployee.departmentId" name="departmentId" required>
+            <option [defaultSelected]="editingEmployee.departmentId" *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="employee-dateofbirth">Date of Birth</label>
+          <input type="date" class="form-control" id="employee-dateofbirth" [(ngModel)]="editingEmployee.dateOfBirth" name="dateOfBirth">
+        </div>
+        <div class="form-group">
+          <label for="employee-salary">Salary</label>
+          <input type="number" class="form-control" id="employee-salary" [(ngModel)]="editingEmployee.salary" name="salary" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Employee</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEditEmployee()">Cancel</button>
+      </form>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+    <h1>Departments</h1>
+  
+    <div class="row">
+      <div class="col-md-4">
+        <h3>Add New Department</h3>
+        <form (submit)="addDepartment()">
+          <div class="form-group">
+            <label for="department-name">Name</label>
+            <input type="text" class="form-control" id="department-name" [(ngModel)]="newDepartment.name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="department-description">Description</label>
+            <textarea class="form-control" id="department-description" [(ngModel)]="newDepartment.description" name="description"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Department</button>
+        </form>
+      </div>
+  
+      <div class="col-md-8">
+        <h3>List of Departments</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let department of departments">
+              <td>{{ department.id }}</td>
+              <td>{{ department.name }}</td>
+              <td>{{ department.description }}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-primary" (click)="editDepartment(department)">Edit</button>
+                <button type="button" class="btn btn-sm btn-danger" (click)="deleteDepartment(department.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <div *ngIf="editingDepartment">
+      <h3>Edit Department</h3>
+      <form (submit)="updateDepartment()">
+        <div class="form-group">
+          <label for="department-name">Name</label>
+          <input type="text" class="form-control" id="department-name" [(ngModel)]="editingDepartment.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="department-description">Description</label>
+          <textarea class="form-control" id="department-description" [(ngModel)]="editingDepartment.description" name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Department</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEditDepartment()">Cancel</button>
+      </form>
+    </div>
+  </div>
